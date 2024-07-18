@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사계절 왼쪽 슬라이드</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        #layout {max-width: 640px; margin: auto; border: 1px solid red; overflow: hidden;}
+        #slide {display: flex; width: 400%; position: relative; left: 0;}
+        #slide div {border: 1px solid blue; background: pink; width: 100%;}
+        img {width: 100%; height: 100%;}
+        p {text-align: center;}
+
+
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=> {
+            //변수
+            const area = document.getElementById("slideArea");
+            let x1;
+            let x2;
+            let Sliding = false;
+            let pos ; 
+
+            const s1 = document.getElementById('slide');
+            
+
+
+            const toLeft = () => {
+                Sliding = true;
+                //지정요소.스타일.css속성 = '값';
+                s1.style.transition = 'left 1.5s';
+                s1.style.left = '-100%';
+
+                setTimeout(() => {
+                    x()
+                }, 1900);
+
+                const x = () => {
+                    s1.style.left = 0;
+                    s1.style.transition = 'none';
+                    s1.append(s1.firstElementChild);
+                    // 첫번째 요소를 맨뒤로 보내라?
+                    Sliding = false;
+                };
+            };
+
+            //함수
+            // setInterval( toLeft , 2000);  // 얘가 hover대신함
+
+            area.addEventListener("touchstart", e=>{
+                if(!Sliding) {
+                    x1 = e.touches[0].clientX
+
+                    area.addEventListener("touchend", zz= e=>{
+                        x2 = e.changedTouches[0].clientX;
+
+                        if (x1 > x2) {
+                            toLeft()
+                        }
+                        area.removeEventListener("touchend", zz);
+                    });
+                }
+            });
+
+
+        });/////////////////////전체 끝
+    </script>
+</head>
+<body>
+    <div id="layout">
+        <section id="slideArea">
+            <h1>왼쪽으로 슬라이드하면 사진 넘어감</h1>
+            <div id="slide">
+                <div><img src="images/spring.jpg" alt="spring"></div>
+                <div><img src="images/summer.jpg" alt="summer"></div>
+                <div><img src="images/fall.jpg" alt="fall"></div>
+                <div><img src="images/winter.jpg" alt="winter"></div>
+            </div>
+        </section>
+    </div>
+    <p>
+        <strong>★주의사항★</strong><br>
+        터치 가능한 디바이스에서만 반응함.
+    </p>
+</body>
+</html>
