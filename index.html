@@ -7,11 +7,17 @@
     <style>
         * {margin: 0; padding: 0; box-sizing: border-box;}
         #layout {max-width: 640px; margin: auto; border: 1px solid red; overflow: hidden;}
+        #slideArea {position: relative;}
         #slide {display: flex; width: 400%; position: relative; left: 0;}
         #slide div {border: 1px solid blue; background: pink; width: 100%;}
         img {width: 100%; height: 100%;}
         p {text-align: center;}
 
+        #circle {position: absolute; bottom: 0; width: 100%; justify-content: center; display: flex;}
+        #circle div {width: 20px; height: 20px;
+            background-color: white; box-shadow: 0 0 10px black;
+            border-radius: 50%; margin: 10px;}
+        #circle div.red {background-color: red;}
 
     </style>
     <script>
@@ -25,6 +31,8 @@
 
             const s1 = document.getElementById('slide');
             
+            const circle = document.getElementById("circle");
+            let ii = 0;
 
 
             const toLeft = () => {
@@ -36,6 +44,9 @@
                 setTimeout(() => {
                     x()
                 }, 1900);
+                document.querySelector(".red").classList.remove('red')
+                ii = (ii + 1) % circle.children.length;  //
+                circle.children[ii].classList.add('red');
 
                 const x = () => {
                     s1.style.left = 0;
@@ -77,6 +88,12 @@
                 <div><img src="images/summer.jpg" alt="summer"></div>
                 <div><img src="images/fall.jpg" alt="fall"></div>
                 <div><img src="images/winter.jpg" alt="winter"></div>
+            </div>
+            <div id="circle">
+                <div class="red"></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
         </section>
     </div>
